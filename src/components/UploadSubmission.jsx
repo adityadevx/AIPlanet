@@ -6,11 +6,11 @@ function UploadSubmission({ addSubmission }) {
 
   // formData is an object
   const [formData, setFormData] = useState({
-    title: '', summary: '', description: '', startDate: '', endDate: '', githubLink: '', otherLink: ''
+    title: '', summary: '', description: '', startDate: '', endDate: '', githubLink: '', otherLink: '',favourite: false
   })
 
-  // image is a file
-  const [image, setImage] = useState(null);
+  
+  const [base64, setBase64] = useState("");
 
   // Destructuring formData
   const { title, summary, description, startDate, endDate, githubLink, otherLink } = formData;
@@ -24,17 +24,19 @@ function UploadSubmission({ addSubmission }) {
   }
   const handleOnChangeImage = (e) => {
     const selectedFile = e.target.files[0];
-    setImage(selectedFile);
+    const reader = new FileReader();
+    reader.onload = () => {
+      setBase64(reader.result);
+    }
+    reader.readAsDataURL(selectedFile);
+    console.log(reader.result);
     // console.log(image);
   }
 
-
-
-
-
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    addSubmission(formData, image);
+
+    addSubmission(formData, base64);
     // addHackathonSubmission();
   }
 
@@ -100,21 +102,18 @@ function UploadSubmission({ addSubmission }) {
         <Row className="mb-5">
           <Form.Group as={Col} sm={6} controlId="formGridText">
             <Form.Label className='font-bold'>Other Links</Form.Label>
-            <Form.Control type="text" name='otherLink' placeholder="You can upload a video demo or URL of your demo app here." value={otherLink} onChange={(e) => { handleOnChange(e) }} required />
+            <Form.Control type="text" name='otherLink' placeholder="You can upload a video demo or URL of your demo app here." value={otherLink} onChange={(e) => { handleOnChange(e) }}/>
           </Form.Group>
         </Row>
 
         <hr />
 
-        <Button variant="primary" type="submit" >
+        <Button variant="primary" type="submit">
           Upload Submission
         </Button>
       </Form>
     </Container>
   );
 }
-
-
-
 
 export default UploadSubmission;

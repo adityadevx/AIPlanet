@@ -5,6 +5,7 @@ import SubmissionCards from './components/SubmissionCards';
 import Submissions from './components/Submissions';
 import UploadSubmission from './components/UploadSubmission';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HackathonDetails from './components/HackathonDetails';
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
   const [submission, setSubmission] = useState(hackathonSubmissions);
 
   const addSubmission = (formValue,imageValue) => {
-   console.log(imageValue);
+  //  console.log(imageValue);
    
     let id;
     if (hackathonSubmissions.length === 0) {
@@ -36,18 +37,16 @@ function App() {
       title: formValue.title,
       summary: formValue.summary,
       description: formValue.description,
-      imageName: imageValue.name,
+      imageName: imageValue,
       startDate: formValue.startDate,
       endDate: formValue.endDate,
       github: formValue.githubLink,
       otherLink: formValue.otherLink,
+      favourite: formValue.favourite,
     }
     setSubmission([...submission, mySubmission]);
     localStorage.setItem('hackathonSubmissions', JSON.stringify([...submission, mySubmission]));
-
   }
-
-
   return (
     <>
       <Router>
@@ -68,6 +67,13 @@ function App() {
               <UploadSubmission addSubmission={addSubmission} />
             </>
           } />
+
+          <Route path='/submissiondetails/:id' element={
+            <>
+              <Nav />
+              <HackathonDetails />
+              </>
+          }/>
         </Routes>
       </Router>
     </>

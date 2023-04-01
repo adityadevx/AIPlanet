@@ -8,5 +8,4 @@
 
 ## key in submission card
 
-## local storage fixes
  

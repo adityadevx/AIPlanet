@@ -16,6 +16,7 @@ const Submissions = () => {
             color: 'black'
         }
     }
+    
     return (
         <>
             <Container className='my-3'>
