@@ -28,7 +28,7 @@ const Submissions = () => {
     };
 
     const handleSearchQuery = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         setSearchQuery(e.target.value);
         setActive(active.filter((element) => {
             return element.title.toLowerCase().includes(e.target.value.toLowerCase());
@@ -41,14 +41,14 @@ const Submissions = () => {
     }
 
     const handleOldest = () => {
-       
+    
     }
 
     const lastUpdated = (uploadDate) => {
         const today = new Date();
         const daysPassed = Math.floor((today - uploadDate) / (1000 * 60 * 60 * 24));
-        console.log(uploadDate, today, daysPassed)
-        if(daysPassed === 0)  return (`last updated 0 days ago`)
+        // console.log(uploadDate, today, daysPassed)
+        if (daysPassed === 0) return (`last updated 0 days ago`)
         return (`last updated ${daysPassed} days ago`)
     }
 
@@ -106,8 +106,21 @@ const Submissions = () => {
                     {
                         Array.from(active).map((element, index) => {
                             return (
-                                <>
-                                    <Col sm={4} className='my-2' onClick={(e) => { window.location.href = `/submissiondetails/${element.id}` }} key={index + 1}>
+
+                                <div className="card cardShadow col-md-3 m-2" key={index + 1}
+                                    onClick={() => { window.location.href = `/submissiondetails/${element.id}` }}
+                                >
+                                    <div className="d-flex flex-row p-3 align-items-center">
+                                        <img src={element.imageName} height="100" width="100" alt="" style={{ borderRadius: "10px" }} />
+                                        <h5 className="card-title px-2">{element.hackathonName}</h5>
+                                    </div>
+                                    <div className="card-body">
+                                        <p className="card-text">{element.summary}</p>
+                                        <p className="text-end text-muted">{lastUpdated(new Date(element.startDate))}</p>
+                                    </div>
+                                </div>    
+                            )
+                                  {/* <Col sm={4} className='my-2' onClick={(e) => { window.location.href = `/submissiondetails/${element.id}` }} key={index + 1}>
                                         <Card style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }} >
                                             <Card.Body>
                                                 <div className='d-flex align-items-center'>
@@ -132,11 +145,8 @@ const Submissions = () => {
                                                 </Card.Text>
                                             </Card.Body>
                                         </Card>
-                                    </Col>
-
-                                </>
-                            )
-                        })
+                                    </Col> */}
+                    })
                     }
                 </Row>
             </Container>

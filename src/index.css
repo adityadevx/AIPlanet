@@ -62,3 +62,9 @@ label{
   align-items: center;
   justify-content: center;
 }
+
+.cardShadow{
+  -webkit-box-shadow: 8px 9px 20px 0px rgba(224, 211, 224, 1) ;
+  -moz-box-shadow: 8px 9px 20px 0px rgba(224, 211, 224, 1)  ;
+  box-shadow: 8px 9px 20px 0px rgba(224, 211, 224, 1)  ;
+}
