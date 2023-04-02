@@ -3,8 +3,6 @@ import { Card, Container, Row, Col } from 'react-bootstrap'
 
 
 const SubmissionCards = ({ submission }) => {
-   
-
     return (
         <Container>
             <Row >
@@ -26,7 +24,7 @@ const SubmissionCards = ({ submission }) => {
                                                         />
                                                     </span>
                                                     <span>
-                                                        <h5 className='mx-auto'>{element.title}</h5>
+                                                        <h5 className='mx-auto flex-grow-1'>{element.title}</h5>
                                                     </span>
                                                 </div>
                                                 <Card.Text className='m-2'>

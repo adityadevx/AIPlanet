@@ -1,12 +1,13 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/esm/Container'
-import { Row, Col, Dropdown, DropdownButton,Card } from 'react-bootstrap'
+import { Row, Col, Dropdown, DropdownButton, Card } from 'react-bootstrap'
 
 const Submissions = () => {
     let items;
     localStorage.getItem('hackathonSubmissions') === null ? items = [] : items = JSON.parse(localStorage.getItem('hackathonSubmissions'));
 
     const [active, setActive] = useState(items);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleAllSubmissions = () => {
         console.log('all submissions');
@@ -23,7 +24,33 @@ const Submissions = () => {
         setActive(active.filter((element) => {
             return element.favourite === true;
         }
-    ))};
+        ))
+    };
+
+    const handleSearchQuery = (e) => {
+        console.log(e.target.value);
+        setSearchQuery(e.target.value);
+        setActive(active.filter((element) => {
+            return element.title.toLowerCase().includes(e.target.value.toLowerCase());
+        }))
+    }
+
+    const handleNewset = () => {
+
+
+    }
+
+    const handleOldest = () => {
+       
+    }
+
+    const lastUpdated = (uploadDate) => {
+        const today = new Date();
+        const daysPassed = Math.floor((today - uploadDate) / (1000 * 60 * 60 * 24));
+        console.log(uploadDate, today, daysPassed)
+        if(daysPassed === 0)  return (`last updated 0 days ago`)
+        return (`last updated ${daysPassed} days ago`)
+    }
 
     const columnStyles = {
         span: {
@@ -33,7 +60,7 @@ const Submissions = () => {
     }
 
 
-    
+
 
     return (
         <>
@@ -41,12 +68,12 @@ const Submissions = () => {
                 <Row>
                     <Col >
                         <div className='d-flex'>
-                            <p className='mx-2 allSubmissions' style={columnStyles.span} onClick={()=>{
+                            <p className='mx-2 allSubmissions' style={columnStyles.span} onClick={() => {
                                 handleAllSubmissions()
                             }}>
                                 <a href="#" >All Submissions</a>
                             </p>
-                            <p className='mx-2 favouriteSubmissions' onClick={()=>{handleFavouriteSubmissions()}} >
+                            <p className='mx-2 favouriteSubmissions' onClick={() => { handleFavouriteSubmissions() }} >
                                 <a href="#">Favourite Submissions</a>
                             </p>
                         </div>
@@ -54,28 +81,33 @@ const Submissions = () => {
                     <Col className='d-flex align-items-center justify-content-end '>
                         <div className="form px-2">
                             <i className="fa fa-search"></i>
-                            <input type="text" className="form-control form-input text-center " placeholder="Search..." style={{ borderRadius: '2rem', borderColor: 'black' }} />
+                            <input type="text" className="form-control form-input text-center " placeholder="Search..."
+                                value={searchQuery}
+                                onChange={(e) => { handleSearchQuery(e) }}
+                                style={{ borderRadius: '2rem', borderColor: 'black' }}
+                            />
                         </div>
                         <Dropdown >
                             <Dropdown.Toggle variant="light" id="dropdown-basic" style={{ borderRadius: '2rem', borderColor: 'black' }}>
                                 Newest
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href="#/action-1">Newest</Dropdown.Item>
-                                <Dropdown.Item href="#/action-2">Oldest</Dropdown.Item>
+                                <Dropdown.Item href="#" onClick={(e) => { handleNewset() }}>Newest</Dropdown.Item>
+                                <Dropdown.Item href="#" onClick={() => { handleOldest() }} >Oldest</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
                 </Row>
             </Container>
-            
+
+            {/* Displaying Cards */}
             <Container>
                 <Row >
                     {
-                        Array.from(active).map((element,index) => {
+                        Array.from(active).map((element, index) => {
                             return (
                                 <>
-                                    <Col sm={4} className='my-2' onClick={(e) => { window.location.href = `/submissiondetails/${element.id}` }} key={index+1}>
+                                    <Col sm={4} className='my-2' onClick={(e) => { window.location.href = `/submissiondetails/${element.id}` }} key={index + 1}>
                                         <Card style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }} >
                                             <Card.Body>
                                                 <div className='d-flex align-items-center'>
@@ -96,7 +128,7 @@ const Submissions = () => {
                                                     {element.summary}
                                                 </Card.Text>
                                                 <Card.Text className='text-end font-weight-light'>
-                                                    {element.startDate}
+                                                    {lastUpdated( new Date(element.startDate))}
                                                 </Card.Text>
                                             </Card.Body>
                                         </Card>

@@ -1,5 +1,4 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import {Row,Col,Button} from 'react-bootstrap';
 
@@ -10,7 +9,7 @@ const HeroSection = () => {
         <>
         <Container  style={{backgroundColor:'rgba(0, 49, 69, 1)'}} fluid>
             <Container className='py-5 heroContainer text-white'>
-                <Row>
+                <Row id='heroSectionRow'>
                     <Col sm={9}>
                         <h1>Hackathon Submissions</h1>
                         <p style={{ fontWeight: '500', fontSize: '17px' }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptatum explicabo voluptatem animi necessitatibus dolore laborum quibusdam molestiae sapiente, quae deserunt aperiam.quae deserunt aperiam. Lorem, ipsum dolor.</p>

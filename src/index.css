@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 :root{
-  --font-family: 'Poppins', sans-serif;
+  --primary-font-family: 'Poppins', sans-serif;
   --upload-submission-button-color : rgb(68, 146, 76) ;
 }
 
@@ -9,8 +9,8 @@
  background-color: var(--upload-submission-button-color) !important;
  border: none;
 }
-h1 h2 {
-  font-family: var(--font-family);
+h1, h2,h6 {
+  font-family: var(--primary-font-family) !important;
   font-weight: 600 !important;
   line-height: 60px !important;
   font-size: 42px !important;
@@ -28,7 +28,6 @@ h1 h2 {
 }
 
 
-
 p {
   font-family: var(--font-family);
   line-height: 25.5px;
@@ -41,7 +40,6 @@ p {
 }
 
 .form{
-
   position: relative;
 }
 
@@ -50,4 +48,17 @@ p {
   top:12px;
   left: 16px;
   color: #9ca3af;
+}
+
+label{
+  font-family: var(--primary-font-family);
+}
+#heroSectionRow{
+  flex-wrap: wrap-reverse !important;
+}
+
+.linkButtons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

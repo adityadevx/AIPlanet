@@ -43,6 +43,7 @@ function App() {
       github: formValue.githubLink,
       otherLink: formValue.otherLink,
       favourite: formValue.favourite,
+      hackathonName : formValue.hackathonName,
     }
     setSubmission([...submission, mySubmission]);
     localStorage.setItem('hackathonSubmissions', JSON.stringify([...submission, mySubmission]));

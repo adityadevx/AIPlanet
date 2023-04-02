@@ -5,15 +5,13 @@ import { Row, Col, Form, Button, Container } from 'react-bootstrap'
 function UploadSubmission({ addSubmission }) {
 
   // formData is an object
+  const [base64, setBase64] = useState("");
   const [formData, setFormData] = useState({
-    title: '', summary: '', description: '', startDate: '', endDate: '', githubLink: '', otherLink: '',favourite: false
+    title: '', summary: '', description: '', startDate: '', hackathonName: '', endDate: '', githubLink: '', otherLink: '', favourite: false
   })
 
-  
-  const [base64, setBase64] = useState("");
-
   // Destructuring formData
-  const { title, summary, description, startDate, endDate, githubLink, otherLink } = formData;
+  const { title, summary, description, startDate, endDate, githubLink, otherLink, hackathonName } = formData;
 
 
   const handleOnChange = (e) => {
@@ -35,8 +33,10 @@ function UploadSubmission({ addSubmission }) {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-
     addSubmission(formData, base64);
+    setFormData({ title: '', summary: '', description: '', startDate: '', endDate: '', githubLink: '', otherLink: '', hackathonName: '' });
+    setBase64('');
+    window.location.href = '/'
     // addHackathonSubmission();
   }
 
@@ -70,6 +70,14 @@ function UploadSubmission({ addSubmission }) {
           </Form.Group>
         </Row>
 
+        {/* Hackathon Name */}
+        <Row className="mb-3">
+          <Form.Group as={Col} sm={6} controlId="formGridEmail">
+            <Form.Label className='font-bold'>Hackathon Name</Form.Label>
+            <Form.Control type="text" placeholder="Enter your hackathon name" name='hackathonName' value={hackathonName} onChange={(e) => { handleOnChange(e) }} required />
+          </Form.Group>
+        </Row>
+
         {/* Cover Image  */}
         <Row className="mb-3">
           <Form.Group as={Col} sm={6} controlId="formGridEmail">
@@ -77,16 +85,24 @@ function UploadSubmission({ addSubmission }) {
             <br />
             <Form.Label className='font-bold'>Minimum resolution : 360px X 360px</Form.Label>
             <Form.Control type="file" placeholder="A short summary of your submission(this will be visible to your submission)" onChange={(e) => { handleOnChangeImage(e) }} required />
+
+
           </Form.Group>
         </Row>
 
         {/* Date */}
         <Row sm={6} className="mb-3">
           <Col sm={3}>
-            <Form.Control type='date' name='startDate' value={startDate} onChange={(e) => { handleOnChange(e) }} placeholder='Select Start Date' />
+            <Form.Control type='text' name='startDate' value={startDate} onChange={(e) => { handleOnChange(e) }} placeholder='Select Start Date'
+              onFocus={(e) => { e.target.type = 'date' }}
+              onBlur={(e) => { e.target.type = 'text' }}
+            />
           </Col>
           <Col sm={3}>
-            <Form.Control type='date' name="endDate" value={endDate} onChange={(e) => { handleOnChange(e) }} placeholder="Select End Date" />
+            <Form.Control type='text' name="endDate" value={endDate} onChange={(e) => { handleOnChange(e) }} placeholder="Select End Date"
+              onFocus={(e) => { e.target.type = 'date' }}
+              onBlur={(e) => { e.target.type = 'text' }}
+            />
           </Col>
         </Row>
 
@@ -102,7 +118,7 @@ function UploadSubmission({ addSubmission }) {
         <Row className="mb-5">
           <Form.Group as={Col} sm={6} controlId="formGridText">
             <Form.Label className='font-bold'>Other Links</Form.Label>
-            <Form.Control type="text" name='otherLink' placeholder="You can upload a video demo or URL of your demo app here." value={otherLink} onChange={(e) => { handleOnChange(e) }}/>
+            <Form.Control type="text" name='otherLink' placeholder="You can upload a video demo or URL of your demo app here." value={otherLink} onChange={(e) => { handleOnChange(e) }} />
           </Form.Group>
         </Row>
 
