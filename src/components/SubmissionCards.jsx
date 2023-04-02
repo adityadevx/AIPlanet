@@ -1,23 +1,9 @@
 import React, { useState } from 'react'
-import { redirect } from 'react-router-dom'
 import { Card, Container, Row, Col } from 'react-bootstrap'
 
 
-
-
 const SubmissionCards = ({ submission }) => {
-    const [naviagate, setNavigate] = useState(false);
-
-    const handleHackathonDetails = (id) => {
-        console.log("clicked")
-        setNavigate(true);
-        if (naviagate) {
-            return redirect(`/submissiondetails/:${id}`)
-        }
-    }
-
-
-
+   
 
     return (
         <Container>
@@ -25,9 +11,8 @@ const SubmissionCards = ({ submission }) => {
                 {
                     Array.from(submission).map((element) => {
                         return (
-                            <>
-                                <div key={element.id}>
-                                    <Col sm={4} className='my-2' onClick={(e)=>{window.location.href =`/submissiondetails/${element.id}`}}>
+                            <> 
+                                    <Col sm={4} className='my-2' onClick={(e)=>{window.location.href =`/submissiondetails/${element.id}`}} key={element.id}>
                                         <Card style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }} >
                                             <Card.Body>
                                                 <div className='d-flex align-items-center'>
@@ -41,7 +26,7 @@ const SubmissionCards = ({ submission }) => {
                                                         />
                                                     </span>
                                                     <span>
-                                                        <h5 className='mx-5'>{element.title}</h5>
+                                                        <h5 className='mx-auto'>{element.title}</h5>
                                                     </span>
                                                 </div>
                                                 <Card.Text className='m-2'>
@@ -53,7 +38,7 @@ const SubmissionCards = ({ submission }) => {
                                             </Card.Body>
                                         </Card>
                                     </Col>
-                                </div>
+                             
                             </>
                         )
                     })

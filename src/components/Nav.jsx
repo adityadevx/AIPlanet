@@ -6,7 +6,7 @@ function Nav() {
     <>
       <Navbar bg="light">
         <Container>
-          <Navbar.Brand to="/">
+          <Navbar.Brand href="/">
             <img
               src={mainLogo}
               width="auto"

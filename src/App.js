@@ -56,8 +56,8 @@ function App() {
               <>
                 <Nav />
                 <HeroSection />
-                <Submissions />
-                <SubmissionCards submission={submission}/>
+                <Submissions submission={submission}/>
+                {/* <SubmissionCards submission={submission}/> */}
               </>
             } />
 

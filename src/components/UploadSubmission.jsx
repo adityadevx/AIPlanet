@@ -108,7 +108,7 @@ function UploadSubmission({ addSubmission }) {
 
         <hr />
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className='uploadSubmissionBtn'>
           Upload Submission
         </Button>
       </Form>

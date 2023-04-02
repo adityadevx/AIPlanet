@@ -14,7 +14,7 @@ const HeroSection = () => {
                     <Col sm={9}>
                         <h1>Hackathon Submissions</h1>
                         <p style={{ fontWeight: '500', fontSize: '17px' }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, voluptatum explicabo voluptatem animi necessitatibus dolore laborum quibusdam molestiae sapiente, quae deserunt aperiam.quae deserunt aperiam. Lorem, ipsum dolor.</p>
-                        <Button variant="primary" href={'/submissions'} size="lg" active style={{backgroundColor:"rgba(68, 146, 76, 1)"}}>
+                        <Button variant="primary" href={'/submissions'} size="lg" active className='uploadSubmissionBtn'>
                         Upload Submission
                     </Button>
                     </Col>
