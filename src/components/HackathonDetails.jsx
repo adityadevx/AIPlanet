@@ -14,8 +14,8 @@ function HackathonDetails() {
     console.log(JSON.parse(obj));
     const parsedObj = await JSON.parse(obj);
 
-
     const selectedItem = parsedObj.filter((item) => {
+      console.log(item.github)
       return item.id == hackathonId;
     })
     console.log(typeof selectedItem, selectedItem)
@@ -49,12 +49,23 @@ function HackathonDetails() {
     return (`${day} ${monthName}`);
   }
 
+  const handleDelete = async () => {
+    const currentUrl = await window.location.href;
+    const hackathonId = await currentUrl.split('/').slice(-1).toString();
+    console.log(hackathonId);
+
+   let removingItem = await  localStorage.clear(`hackathonSubmissions[${hackathonId}]`);
+    console.log(removingItem);
+    
+  const updated =  localStorage.getItem('hackathonSubmissions');
+  
+    setDetails(JSON.parse(updated));
+    window.location.href = '/';
+  }
 
   useEffect(() => {
     hackathon();
   }, [])
-
-
 
   return (
     <>
@@ -65,7 +76,7 @@ function HackathonDetails() {
           <>
             <Container style={{ backgroundColor: 'rgba(0, 49, 69, 1)', color: 'white' }} fluid>
               {details.length === 0 ? <h1>Nothing to display</h1> :
-                <Row className='p-5 align-items-center'>
+                <Row className='px-3 py-5 align-items-center'>
                   <Col sm={9}>
                     <Col className='d-flex align-items-center '>
                       <div>
@@ -102,8 +113,8 @@ function HackathonDetails() {
                   </Col>
                   <Col sm={3} className='align-items-center' >
                     <div className="d-grid gap-2 col-6 ">
-                      <a className="btn  btn-outline-light linkButtons" href={`${details[0].github}`}
-                        target='_blank' role="button">
+                      <a className="btn  btn-outline-light linkButtons" href={`https://chat.openai.com/chat`}
+                         role="button">
                         <span className='px-1' >
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
@@ -112,7 +123,7 @@ function HackathonDetails() {
                         </span>
                         Edit
                       </a>
-                      <a className="btn btn-outline-light linkButtons" href={details[0].otherLink} target='_blank' role="button">
+                      <a className="btn btn-outline-light linkButtons" href={details[0].otherLink} target='_blank' role="button" onClick={ ()=>{handleDelete()}}>
                         <span className='px-1'>
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
                             <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />

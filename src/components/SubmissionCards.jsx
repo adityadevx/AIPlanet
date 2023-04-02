@@ -5,7 +5,7 @@ import { Card, Container, Row, Col } from 'react-bootstrap'
 const SubmissionCards = ({ submission }) => {
     return (
         <Container>
-            <Row >
+            <Row>
                 {
                     Array.from(submission).map((element) => {
                         return (

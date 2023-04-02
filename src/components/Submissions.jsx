@@ -41,7 +41,7 @@ const Submissions = () => {
     }
 
     const handleOldest = () => {
-    
+
     }
 
     const lastUpdated = (uploadDate) => {
@@ -102,12 +102,12 @@ const Submissions = () => {
 
             {/* Displaying Cards */}
             <Container>
-                <Row >
+                <Row className=''>
                     {
                         Array.from(active).map((element, index) => {
                             return (
 
-                                <div className="card cardShadow col-md-3 m-2" key={index + 1}
+                                <div className="card cardShadow col-md-3" key={element.id}
                                     onClick={() => { window.location.href = `/submissiondetails/${element.id}` }}
                                 >
                                     <div className="d-flex flex-row p-3 align-items-center">
@@ -118,35 +118,9 @@ const Submissions = () => {
                                         <p className="card-text">{element.summary}</p>
                                         <p className="text-end text-muted">{lastUpdated(new Date(element.startDate))}</p>
                                     </div>
-                                </div>    
+                                </div>
                             )
-                                  {/* <Col sm={4} className='my-2' onClick={(e) => { window.location.href = `/submissiondetails/${element.id}` }} key={index + 1}>
-                                        <Card style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }} >
-                                            <Card.Body>
-                                                <div className='d-flex align-items-center'>
-                                                    <span>
-                                                        <img src={element.imageName} alt=""
-                                                            style={{
-                                                                height: "100px",
-                                                                width: "110px",
-                                                                borderRadius: "6px"
-                                                            }}
-                                                        />
-                                                    </span>
-                                                    <span>
-                                                        <h5 className='mx-auto'>{element.title}</h5>
-                                                    </span>
-                                                </div>
-                                                <Card.Text className='m-2'>
-                                                    {element.summary}
-                                                </Card.Text>
-                                                <Card.Text className='text-end font-weight-light'>
-                                                    {lastUpdated( new Date(element.startDate))}
-                                                </Card.Text>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col> */}
-                    })
+                        })
                     }
                 </Row>
             </Container>
