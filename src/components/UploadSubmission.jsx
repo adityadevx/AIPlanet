@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Row, Col, Form, Button, Container } from 'react-bootstrap'
 
 function UploadSubmission({ addSubmission }) {
-
   // formData is an object
   const [base64, setBase64] = useState("");
   const [formData, setFormData] = useState({
@@ -36,7 +35,7 @@ function UploadSubmission({ addSubmission }) {
     addSubmission(formData, base64);
     setFormData({ title: '', summary: '', description: '', startDate: '', endDate: '', githubLink: '', otherLink: '', hackathonName: '' });
     setBase64('');
-    window.location.href = '/'
+    
     // addHackathonSubmission();
   }
 
@@ -83,22 +82,24 @@ function UploadSubmission({ addSubmission }) {
           <Form.Group as={Col} sm={6} controlId="formGridEmail">
             <Form.Label className='font-bold'>Cover Image</Form.Label>
             <br />
-            <Form.Label className='font-bold'>Minimum resolution : 360px X 360px</Form.Label>
+            <Form.Label className='text-muted'>Minimum resolution : 360px X 360px</Form.Label>
             <Form.Control type="file" placeholder="A short summary of your submission(this will be visible to your submission)" onChange={(e) => { handleOnChangeImage(e) }} required />
-
-
           </Form.Group>
         </Row>
 
         {/* Date */}
         <Row sm={6} className="mb-3">
           <Col sm={3}>
+            <Form.Label>
+              <span>Hackathon Start Date</span>
+            </Form.Label>
             <Form.Control type='text' name='startDate' value={startDate} onChange={(e) => { handleOnChange(e) }} placeholder='Select Start Date'
               onFocus={(e) => { e.target.type = 'date' }}
               onBlur={(e) => { e.target.type = 'text' }}
             />
           </Col>
           <Col sm={3}>
+            <Form.Label>Hackathon End Date</Form.Label>
             <Form.Control type='text' name="endDate" value={endDate} onChange={(e) => { handleOnChange(e) }} placeholder="Select End Date"
               onFocus={(e) => { e.target.type = 'date' }}
               onBlur={(e) => { e.target.type = 'text' }}

@@ -45,8 +45,10 @@ function App() {
       favourite: formValue.favourite,
       hackathonName : formValue.hackathonName,
     }
+    
     setSubmission([...submission, mySubmission]);
     localStorage.setItem('hackathonSubmissions', JSON.stringify([...submission, mySubmission]));
+    window.location.href = `/submissiondetails/${id}`;
   }
   return (
     <>

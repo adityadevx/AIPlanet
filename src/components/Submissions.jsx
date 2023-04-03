@@ -28,19 +28,24 @@ const Submissions = () => {
     };
 
     const handleSearchQuery = (e) => {
-        // console.log(e.target.value);
+        console.log(e.target.value);
         setSearchQuery(e.target.value);
+        
         setActive(active.filter((element) => {
-            return element.title.toLowerCase().includes(e.target.value.toLowerCase());
+            return element.hackathonName.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
         }))
     }
 
     const handleNewset = () => {
-
-
+        const sortedNews = active.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+        console.log(sortedNews)
+        setActive(sortedNews);
     }
 
     const handleOldest = () => {
+        const sortedNews = active.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+        console.log(sortedNews)
+        setActive(sortedNews);
 
     }
 
@@ -49,17 +54,12 @@ const Submissions = () => {
         const daysPassed = Math.floor((today - uploadDate) / (1000 * 60 * 60 * 24));
         // console.log(uploadDate, today, daysPassed)
         if (daysPassed === 0) return (`last updated 0 days ago`)
-        return (`last updated ${daysPassed} days ago`)
+        return (`updated ${daysPassed} days ago`)
     }
 
-    const columnStyles = {
-        span: {
-            borderBottom: '6px solid green',
-        },
-
-    }
-
-
+    useEffect(() => {
+        setActive(active);
+    }, [active])
 
 
     return (
@@ -68,7 +68,7 @@ const Submissions = () => {
                 <Row>
                     <Col >
                         <div className='d-flex'>
-                            <p className='mx-2 allSubmissions' style={columnStyles.span} onClick={() => {
+                            <p className='mx-2 allSubmissions' style={{ borderBottom: '6px solid green' }} onClick={() => {
                                 handleAllSubmissions()
                             }}>
                                 <a href="#" >All Submissions</a>
@@ -102,28 +102,28 @@ const Submissions = () => {
 
             {/* Displaying Cards */}
             <Container>
-                <Row className=''>
+                <Row >
                     {
                         Array.from(active).map((element, index) => {
                             return (
-
-                                <div className="card cardShadow col-md-3" key={element.id}
-                                    onClick={() => { window.location.href = `/submissiondetails/${element.id}` }}
-                                >
-                                    <div className="d-flex flex-row p-3 align-items-center">
-                                        <img src={element.imageName} height="100" width="100" alt="" style={{ borderRadius: "10px" }} />
-                                        <h5 className="card-title px-2">{element.hackathonName}</h5>
-                                    </div>
-                                    <div className="card-body">
-                                        <p className="card-text">{element.summary}</p>
-                                        <p className="text-end text-muted">{lastUpdated(new Date(element.startDate))}</p>
+                                <div className="col-md-3 mb-3 mb-sm-0 " key={element.id}>
+                                    <div className="card cardShadow"
+                                        onClick={() => { window.location.href = `/submissiondetails/${element.id}` }} >
+                                        <div className="d-flex flex-row p-3 align-items-center">
+                                            <img src={element.imageName} height="100" width="100" alt="" style={{ borderRadius: "10px" }} />
+                                            <h5 className="card-title px-2">{element.hackathonName}</h5>
+                                        </div>
+                                        <div className="card-body">
+                                            <p className="card-text">{element.summary}</p>
+                                            <p className="text-end text-muted">{lastUpdated(new Date(element.startDate))}</p>
+                                        </div>
                                     </div>
                                 </div>
                             )
                         })
                     }
                 </Row>
-            </Container>
+            </Container >
 
 
         </>

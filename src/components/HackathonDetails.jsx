@@ -4,10 +4,12 @@ import { Container, Row, Col } from 'react-bootstrap'
 function HackathonDetails() {
 
   const [details, setDetails] = useState([]);
+  const [hackathonId, setHackathonId] = useState('')
 
   const hackathon = async () => {
     const currentUrl = await window.location.href;
     const hackathonId = await currentUrl.split('/').slice(-1).toString();
+    setHackathonId(hackathonId);
     // console.log(hackathonId)
 
     const obj = await localStorage.getItem('hackathonSubmissions');
@@ -50,16 +52,16 @@ function HackathonDetails() {
   }
 
   const handleDelete = async () => {
-    const currentUrl = await window.location.href;
-    const hackathonId = await currentUrl.split('/').slice(-1).toString();
-    console.log(hackathonId);
+    const hackhathonList = await JSON.parse(localStorage.getItem('hackathonSubmissions'));
 
-   let removingItem = await  localStorage.clear(`hackathonSubmissions[${hackathonId}]`);
-    console.log(removingItem);
-    
-  const updated =  localStorage.getItem('hackathonSubmissions');
-  
-    setDetails(JSON.parse(updated));
+
+    const filteredList = hackhathonList.filter((item) => {
+      return item.id != hackathonId;
+    })
+    await localStorage.setItem('hackathonSubmissions', JSON.stringify(filteredList));
+    const updated = await localStorage.getItem('hackathonSubmissions');
+    const newupdated = await JSON.parse(updated);
+    setDetails(newupdated)
     window.location.href = '/';
   }
 
@@ -69,9 +71,11 @@ function HackathonDetails() {
 
   return (
     <>
-      <Container fluid  >
-        {details.length === 0 ?
-          <h1>Nothing to display</h1>
+      {
+        details.length === 0 ?
+          <Container >
+            <h2 className='m-3 text-center text-muted'>Nothing To Display</h2>
+          </Container>
           :
           <>
             <Container style={{ backgroundColor: 'rgba(0, 49, 69, 1)', color: 'white' }} fluid>
@@ -92,7 +96,7 @@ function HackathonDetails() {
                     <Col className='d-flex align-items-center'>
                       <span onClick={() => { handleFavourite() }} >
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-star" viewBox="0 0 16 16" >
-                          <path  d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
+                          <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
 
                           />
                         </svg>
@@ -106,15 +110,14 @@ function HackathonDetails() {
                           <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z">
                           </path>
                         </svg>
-                        <span className='px-1'>{dateInString(details[0].startDate)}</span>
+                        <span className='px-1 fw-bold'>{dateInString(details[0].startDate)}</span>
                       </button>
-
                     </Col>
                   </Col>
                   <Col sm={3} className='align-items-center' >
                     <div className="d-grid gap-2 col-6 ">
                       <a className="btn  btn-outline-light linkButtons" href={`https://chat.openai.com/chat`}
-                         role="button">
+                        role="button">
                         <span className='px-1' >
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
@@ -123,7 +126,7 @@ function HackathonDetails() {
                         </span>
                         Edit
                       </a>
-                      <a className="btn btn-outline-light linkButtons" href={details[0].otherLink} target='_blank' role="button" onClick={ ()=>{handleDelete()}}>
+                      <a className="btn btn-outline-light linkButtons" href={details[0].otherLink} target='_blank' role="button" onClick={() => { handleDelete() }}>
                         <span className='px-1'>
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
                             <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
@@ -136,7 +139,7 @@ function HackathonDetails() {
                 </Row>}
             </Container >
 
-            {/* desccription */}
+            {/* Description of the hackathon */}
             <Container className='mt-3'>
               <Row>
                 <Col sm={9} className='px-2'>
@@ -155,7 +158,7 @@ function HackathonDetails() {
                       <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z" />
                     </svg>
                     <span className='px-2'>26-Feb-2022 - 28-Feb-2022</span>
-                    </Col>
+                  </Col>
                   <br />
                   <Col>
                     <div className="d-grid gap-2 col-6 ">
@@ -186,8 +189,7 @@ function HackathonDetails() {
               </Row>
             </Container>
           </>
-        }
-      </Container>
+      }
     </>
   )
 }

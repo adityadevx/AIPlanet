@@ -29,8 +29,10 @@ h1, h2,h6 {
 
 
 p {
-  font-family: var(--font-family);
+  font-family: var(--primary-font-family);
   line-height: 25.5px;
+  font-size: 17px;
+  font-weight: 500;
 }
 
 .heroContainer {
