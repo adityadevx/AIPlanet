@@ -30,23 +30,21 @@ const Submissions = () => {
     const handleSearchQuery = (e) => {
         console.log(e.target.value);
         setSearchQuery(e.target.value);
-        
         setActive(active.filter((element) => {
             return element.hackathonName.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
         }))
     }
 
-    const handleNewset = () => {
-        const sortedNews = active.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
-        console.log(sortedNews)
-        setActive(sortedNews);
+    const handleNewset = async () => {
+        const sortedNew = await active.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+        // console.log(sortedNews)
+        await setActive(sortedNew);
     }
 
-    const handleOldest = () => {
-        const sortedNews = active.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-        console.log(sortedNews)
-        setActive(sortedNews);
-
+    const handleOldest = async () => {
+        const sortedNews = await active.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+        console.log(sortedNews);
+      await  setActive(sortedNews);
     }
 
     const lastUpdated = (uploadDate) => {
@@ -58,7 +56,7 @@ const Submissions = () => {
     }
 
     useEffect(() => {
-        setActive(active);
+        console.log('rendered')
     }, [active])
 
 
@@ -93,7 +91,7 @@ const Submissions = () => {
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Item href="#" onClick={(e) => { handleNewset() }}>Newest</Dropdown.Item>
-                                <Dropdown.Item href="#" onClick={() => { handleOldest() }} >Oldest</Dropdown.Item>
+                                <Dropdown.Item onClick={(e) => { handleOldest() }} >Oldest</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>

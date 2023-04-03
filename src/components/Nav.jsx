@@ -12,7 +12,7 @@ function Nav() {
               width="auto"
               height="50"
               className="d-inline-block align-top"
-              alt=""
+              alt="AI Planet"
             />
           </Navbar.Brand>
         </Container>

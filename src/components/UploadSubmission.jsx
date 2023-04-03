@@ -2,7 +2,20 @@ import React, { useState } from 'react';
 
 import { Row, Col, Form, Button, Container } from 'react-bootstrap'
 
-function UploadSubmission({ addSubmission }) {
+function UploadSubmission({editableId }) {
+  
+  let hackathonSubmissions;
+  if (localStorage.getItem('hackathonSubmissions') === null) {
+    hackathonSubmissions = [];
+  }
+  else {
+    hackathonSubmissions = JSON.parse(localStorage.getItem('hackathonSubmissions'));
+  }
+  const [submission, setSubmission] = useState(hackathonSubmissions);
+  
+  
+  
+  
   // formData is an object
   const [base64, setBase64] = useState("");
   const [formData, setFormData] = useState({
@@ -10,7 +23,7 @@ function UploadSubmission({ addSubmission }) {
   })
 
   // Destructuring formData
-  const { title, summary, description, startDate, endDate, githubLink, otherLink, hackathonName } = formData;
+  const { title, summary, description, startDate, endDate, githubLink, otherLink, hackathonName,favourite } = formData;
 
 
   const handleOnChange = (e) => {
@@ -23,6 +36,19 @@ function UploadSubmission({ addSubmission }) {
     const selectedFile = e.target.files[0];
     const reader = new FileReader();
     reader.onload = () => {
+
+      const image = new Image();
+      image.src = reader.result;
+      image.onload = () => {
+        const height = image.height;
+        const width = image.width;
+        console.log(height, width);
+        if (height < 360 || width < 360) {
+          alert('Image resolution is too low. Minimum resolution : 360px X 360px')
+          return;
+        }
+      }
+
       setBase64(reader.result);
     }
     reader.readAsDataURL(selectedFile);
@@ -32,10 +58,35 @@ function UploadSubmission({ addSubmission }) {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    addSubmission(formData, base64);
+    
+    let id;
+    if (hackathonSubmissions.length === 0) {
+      id = 0;
+    }
+    else {
+      id = hackathonSubmissions[hackathonSubmissions.length - 1].id + 1;
+    }
+
+    const mySubmission = {
+      id: id,
+      title: title,
+      summary: summary,
+      description: description,
+      imageName: base64,
+      startDate: startDate,
+      endDate: endDate,
+      github: githubLink,
+      otherLink: otherLink,
+      favourite: favourite,
+      hackathonName : hackathonName,
+    }
+    
+    setSubmission([...submission, mySubmission]);
+    localStorage.setItem('hackathonSubmissions', JSON.stringify([...submission, mySubmission]));
+    window.location.href = `/submissiondetails/${id}`;
+    
     setFormData({ title: '', summary: '', description: '', startDate: '', endDate: '', githubLink: '', otherLink: '', hackathonName: '' });
     setBase64('');
-    
     // addHackathonSubmission();
   }
 

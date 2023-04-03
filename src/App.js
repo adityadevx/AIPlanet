@@ -9,47 +9,6 @@ import HackathonDetails from './components/HackathonDetails';
 
 
 function App() {
-
-  let hackathonSubmissions;
-
-  //Check if there are any submissions in local storage
-  if (localStorage.getItem('hackathonSubmissions') === null) {
-    hackathonSubmissions = [];
-  }
-  else {
-    hackathonSubmissions = JSON.parse(localStorage.getItem('hackathonSubmissions'));
-  }
-
-  const [submission, setSubmission] = useState(hackathonSubmissions);
-
-  const addSubmission = (formValue,imageValue) => {
-  //  console.log(imageValue);
-   
-    let id;
-    if (hackathonSubmissions.length === 0) {
-      id = 0;
-    }
-    else {
-      id = hackathonSubmissions[hackathonSubmissions.length - 1].id + 1;
-    }
-    const mySubmission = {
-      id: id,
-      title: formValue.title,
-      summary: formValue.summary,
-      description: formValue.description,
-      imageName: imageValue,
-      startDate: formValue.startDate,
-      endDate: formValue.endDate,
-      github: formValue.githubLink,
-      otherLink: formValue.otherLink,
-      favourite: formValue.favourite,
-      hackathonName : formValue.hackathonName,
-    }
-    
-    setSubmission([...submission, mySubmission]);
-    localStorage.setItem('hackathonSubmissions', JSON.stringify([...submission, mySubmission]));
-    window.location.href = `/submissiondetails/${id}`;
-  }
   return (
     <>
       <Router>
@@ -59,7 +18,7 @@ function App() {
               <>
                 <Nav />
                 <HeroSection />
-                <Submissions submission={submission}/>
+                <Submissions />
                 {/* <SubmissionCards submission={submission}/> */}
               </>
             } />
@@ -67,7 +26,7 @@ function App() {
           <Route path='/submissions' element={
             <>
               <Nav />
-              <UploadSubmission addSubmission={addSubmission} />
+              <UploadSubmission  />
             </>
           } />
 
