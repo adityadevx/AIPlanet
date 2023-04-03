@@ -83,13 +83,8 @@ label {
   box-shadow: 8px 9px 20px 0px rgba(224, 211, 224, 1);
 }
 
-/* @media (max-width : 426px) {
-  .itemsMedia {
+@media (max-width : 426px) {
+  /* .itemsMedia {
     justify-content: center !important;
-  }
-
-  .linkButtons {
-    justify-content: center !important;
-    margin-top: 10px;
-  }
-} */
+  } */
+} 

@@ -1,47 +1,43 @@
 import { useState, useEffect } from 'react'
 import { Container, Row, Col, Button, Modal, Form } from 'react-bootstrap'
-import UploadSubmission from './UploadSubmission';
 
 function HackathonDetails() {
 
-  const [details, setDetails] = useState([]);
-  const [hackathonId, setHackathonId] = useState('')
 
-  const [show, setShow] = useState(false);
+  //set the hackathon id
+  const currentUrl = window.location.href;
+  const id = currentUrl.split('/').slice(-1).toString();
+  const [hackathonId, setHackathonId] = useState(id)
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
-  const hackathon = async () => {
-    const currentUrl = await window.location.href;
-    const hackathonId = await currentUrl.split('/').slice(-1).toString();
-    setHackathonId(hackathonId);
-    // console.log(hackathonId)
+  // set the details of the hackathon
+  let selectedHackathon;
+  if (localStorage.getItem('hackathonSubmissions') === null)
+    selectedHackathon = [];
+  else
+    selectedHackathon = JSON.parse(localStorage.getItem('hackathonSubmissions'));
 
-    const obj = await localStorage.getItem('hackathonSubmissions');
-    console.log(JSON.parse(obj));
-    const parsedObj = await JSON.parse(obj);
+  const [details, setDetails] = useState(selectedHackathon);
 
-    const selectedItem = parsedObj.filter((item) => {
-      console.log(item.github)
-      return item.id == hackathonId;
-    })
-    console.log(typeof selectedItem, selectedItem)
-    await setDetails(selectedItem)
-    console.log(details)
-  }
 
   const handleFavourite = async () => {
-    console.log('favourite');
     const obj = localStorage.getItem('hackathonSubmissions');
     const parsedObj = JSON.parse(obj);
-    const currentUrl = await window.location.href;
-    const hackathonId = await currentUrl.split('/').slice(-1).toString();
+    // console.log(parsedObj[hackathonId]);
 
-    console.log(parsedObj[hackathonId]);
-    parsedObj[hackathonId].favourite = true;
-
+    // console.log(parsedObj[hackathonId]);
+    const updateFavourite = parsedObj[hackathonId].favourite === true ? false : true;
+    parsedObj[hackathonId].favourite = updateFavourite;
     localStorage.setItem('hackathonSubmissions', JSON.stringify(parsedObj));
+
+
+    let newDetails = JSON.parse(localStorage.getItem('hackathonSubmissions'));
+    newDetails = newDetails.filter((item) => {
+      return item.id == hackathonId;
+    })
+    setDetails(newDetails);
+
+
   }
 
   const dateInString = (value) => {
@@ -50,7 +46,6 @@ function HackathonDetails() {
     const month = date.getMonth();
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const monthName = months[month];
-
     return (`${day} ${monthName}`);
   }
 
@@ -66,10 +61,9 @@ function HackathonDetails() {
     window.location.href = '/';
   }
 
- 
-  useEffect(() => {
-    hackathon();
-  }, [])
+  // useEffect(() => {
+  //   setDetails(details);
+  // }, [handleFavourite()])
 
   return (
     <>
@@ -99,7 +93,7 @@ function HackathonDetails() {
                       <span onClick={() => { handleFavourite() }} >
                         {
                           details[0].favourite ?
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-star-fill" viewBox="0 0 16 16">
                               <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                             </svg>
                             :
@@ -124,7 +118,7 @@ function HackathonDetails() {
                   </Col>
                   <Col sm={3} className='align-items-center d-flex justify-content-center my-2' >
                     <div className="d-grid gap-2 col-6 ">
-                       <a className="btn  btn-outline-light linkButtons" href={`/editsubmission/${hackathonId}`}
+                      <a className="btn  btn-outline-light linkButtons" href={`/editsubmission/${hackathonId}`}
                         role="button">
                         <span className='px-1' >
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -133,7 +127,7 @@ function HackathonDetails() {
                           </svg>
                         </span>
                         Edit
-                      </a> 
+                      </a>
                       <a className="btn btn-outline-light linkButtons" href={details[0].otherLink} target='_blank' role="button" onClick={() => { handleDelete() }}>
                         <span className='px-1'>
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -157,7 +151,7 @@ function HackathonDetails() {
 
                 <Col sm={4}>
                   <Col className='text-muted my-1'>Hackathon</Col>
-                  
+
                   <Col className='fw-bold'>{details[0].hackathonName}</Col>
                   <br />
                   <Col >
@@ -188,11 +182,9 @@ function HackathonDetails() {
                         </span>
                         Other Link
                       </a>
-
                     </div>
                   </Col>
                   <br />
-
                 </Col>
               </Row>
             </Container>

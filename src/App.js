@@ -20,7 +20,6 @@ function App() {
                 <Nav />
                 <HeroSection />
                 <Submissions />
-                {/* <SubmissionCards submission={submission}/> */}
               </>
             } />
 
