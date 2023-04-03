@@ -95,9 +95,8 @@ function HackathonDetails() {
 
                     </Col>
                     <Col className='py-3'>{details[0].summary}</Col>
-                    <Col className='d-flex align-items-center'>
+                    <Col className='d-flex align-items-center itemsMedia'>
                       <span onClick={() => { handleFavourite() }} >
-
                         {
                           details[0].favourite ?
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
@@ -112,7 +111,6 @@ function HackathonDetails() {
                         }
                       </span>
                       <span style={{ borderLeft: '1px solid white', height: '30px' }} className='mx-3'></span>
-
                       {/* Date Card */}
                       <button type="button" className="btn btn-outline-light d-flex align-items-center" style={{ backgroundColor: 'rgba(37, 89, 115, 1)', borderRadius: "20px" }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-calendar2" viewBox="0 0 16 16">
@@ -124,24 +122,9 @@ function HackathonDetails() {
                       </button>
                     </Col>
                   </Col>
-                  <Col sm={3} className='align-items-center' >
+                  <Col sm={3} className='align-items-center d-flex justify-content-center my-2' >
                     <div className="d-grid gap-2 col-6 ">
-                      {
-                        <>
-                          <Button variant="primary" onClick={handleShow}>
-                            Launch demo modal
-                          </Button>
-                          <Modal show={show} onHide={handleClose}>
-                            <Modal.Header closeButton>
-                              <Modal.Title>Edit Hackathon Details</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                              <UploadSubmission editableId={hackathonId}/>
-                            </Modal.Body>
-                          </Modal>
-                        </>
-                      }
-                      {/* <a className="btn  btn-outline-light linkButtons" href={`#`}
+                       <a className="btn  btn-outline-light linkButtons" href={`/editsubmission/${hackathonId}`}
                         role="button">
                         <span className='px-1' >
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -150,7 +133,7 @@ function HackathonDetails() {
                           </svg>
                         </span>
                         Edit
-                      </a> */}
+                      </a> 
                       <a className="btn btn-outline-light linkButtons" href={details[0].otherLink} target='_blank' role="button" onClick={() => { handleDelete() }}>
                         <span className='px-1'>
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -167,15 +150,15 @@ function HackathonDetails() {
             {/* Description of the hackathon */}
             <Container className='mt-3'>
               <Row>
-                <Col sm={9} className='px-2'>
-                  <p>Description</p>
+                <Col sm={8} className='px-2'>
+                  <p className='fw-bold'>Description</p>
                   <p>{details[0].description}</p>
                 </Col>
 
-                <Col sm={3}>
-                  <Col>Hackathon</Col>
-                  <br />
-                  <Col className='fw-bold'>Oceanic Treasure Hunt</Col>
+                <Col sm={4}>
+                  <Col className='text-muted my-1'>Hackathon</Col>
+                  
+                  <Col className='fw-bold'>{details[0].hackathonName}</Col>
                   <br />
                   <Col >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-calendar2" viewBox="0 0 16 16">
@@ -186,7 +169,7 @@ function HackathonDetails() {
                   </Col>
                   <br />
                   <Col>
-                    <div className="d-grid gap-2 col-6 ">
+                    <div className="d-grid gap-2 col-auto ">
                       <a className="btn btn-light btn-outline-dark linkButtons" href={details[0].github}
                         target='_blank' role="button">
                         <span className='px-2'>

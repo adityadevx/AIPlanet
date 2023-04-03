@@ -1,28 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-:root{
+:root {
   --primary-font-family: 'Poppins', sans-serif;
-  --upload-submission-button-color : rgb(68, 146, 76) ;
+  --upload-submission-button-color: rgb(68, 146, 76);
 }
 
-.uploadSubmissionBtn{
- background-color: var(--upload-submission-button-color) !important;
- border: none;
+body {
+  font-family: var(--primary-font-family);
+
 }
-h1, h2,h6 {
+
+.uploadSubmissionBtn {
+  background-color: var(--upload-submission-button-color) !important;
+  border: none;
+}
+
+h1,
+h2,
+h6 {
   font-family: var(--primary-font-family) !important;
   font-weight: 600 !important;
   line-height: 60px !important;
   font-size: 42px !important;
 }
 
-.favouriteSubmissions, .allSubmissions{
+.favouriteSubmissions,
+.allSubmissions {
   font-size: 17px;
   line-height: 25px;
   font-weight: 500;
-  padding: 0px 10px 
+  padding: 0px 10px
 }
-.favouriteSubmissions>a, .allSubmissions>a{
+
+.favouriteSubmissions>a,
+.allSubmissions>a {
   text-decoration: none;
   color: black;
 }
@@ -41,32 +52,44 @@ p {
   background-size: cover;
 }
 
-.form{
+.form {
   position: relative;
 }
 
-.form .fa-search{
+.form .fa-search {
   position: absolute;
-  top:12px;
+  top: 12px;
   left: 16px;
   color: #9ca3af;
 }
 
-label{
+label {
   font-family: var(--primary-font-family);
 }
-#heroSectionRow{
+
+#heroSectionRow {
   flex-wrap: wrap-reverse !important;
 }
 
-.linkButtons{
+.linkButtons {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.cardShadow{
-  -webkit-box-shadow: 8px 9px 20px 0px rgba(224, 211, 224, 1) ;
-  -moz-box-shadow: 8px 9px 20px 0px rgba(224, 211, 224, 1)  ;
-  box-shadow: 8px 9px 20px 0px rgba(224, 211, 224, 1)  ;
+.cardShadow {
+  -webkit-box-shadow: 8px 9px 20px 0px rgba(224, 211, 224, 1);
+  -moz-box-shadow: 8px 9px 20px 0px rgba(224, 211, 224, 1);
+  box-shadow: 8px 9px 20px 0px rgba(224, 211, 224, 1);
 }
+
+/* @media (max-width : 426px) {
+  .itemsMedia {
+    justify-content: center !important;
+  }
+
+  .linkButtons {
+    justify-content: center !important;
+    margin-top: 10px;
+  }
+} */

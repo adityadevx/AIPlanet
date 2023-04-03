@@ -6,6 +6,7 @@ import Submissions from './components/Submissions';
 import UploadSubmission from './components/UploadSubmission';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HackathonDetails from './components/HackathonDetails';
+import EditHackathon from './components/EditHackathon';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           <Route path='/submissions' element={
             <>
               <Nav />
-              <UploadSubmission  />
+              <UploadSubmission />
             </>
           } />
 
@@ -34,8 +35,15 @@ function App() {
             <>
               <Nav />
               <HackathonDetails />
-              </>
-          }/>
+            </>
+          } />
+
+          <Route path='/editsubmission/:id' element={
+            <>
+              <Nav />
+              <EditHackathon />
+            </>
+          } />
         </Routes>
       </Router>
     </>

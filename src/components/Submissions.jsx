@@ -104,12 +104,12 @@ const Submissions = () => {
                     {
                         Array.from(active).map((element, index) => {
                             return (
-                                <div className="col-md-3 mb-3 mb-sm-0 " key={element.id}>
+                                <div className="col-md-4 mb-3 mb-sm-0 " key={element.id}>
                                     <div className="card cardShadow"
                                         onClick={() => { window.location.href = `/submissiondetails/${element.id}` }} >
                                         <div className="d-flex flex-row p-3 align-items-center">
                                             <img src={element.imageName} height="100" width="100" alt="" style={{ borderRadius: "10px" }} />
-                                            <h5 className="card-title px-2">{element.hackathonName}</h5>
+                                            <h5 className="card-title px-2 fw-bold">{element.hackathonName}</h5>
                                         </div>
                                         <div className="card-body">
                                             <p className="card-text">{element.summary}</p>
