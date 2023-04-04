@@ -87,4 +87,32 @@ label {
   /* .itemsMedia {
     justify-content: center !important;
   } */
-} 
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-search-button {
+  height: 5rem;
+  width: 20rem;
+  background: #e3d9d9;
+  padding: auto;
+  border-radius: 6px;
+  border: 2px dotted black;
+}
+
+.custom-file-upload {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputFile {
+  border: 3px dashed grey;
+  border-radius: 10px;
+  border-radius: 24px;
+  background-color: rgba(245, 245, 245, 1);
+}

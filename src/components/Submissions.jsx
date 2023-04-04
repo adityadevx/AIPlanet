@@ -10,20 +10,17 @@ const Submissions = () => {
     const [active, setActive] = useState(items);
     const [searchQuery, setSearchQuery] = useState('');
 
-
-
     const handleAllSubmissions = () => {
-        console.log('all submissions');
+        // console.log('all submissions');
         document.body.querySelector('.allSubmissions').style.borderBottom = '6px solid green';
         document.body.querySelector('.favouriteSubmissions').style.borderBottom = 'none';
         setActive(items);
     };
 
     const handleFavouriteSubmissions = () => {
-        console.log('favourite submissions');
+        // console.log('favourite submissions');
         document.body.querySelector('.favouriteSubmissions').style.borderBottom = '6px solid green';
         document.body.querySelector('.allSubmissions').style.borderBottom = 'none';
-
         setActive(active.filter((element) => {
             return element.favourite === true;
         }
@@ -31,19 +28,19 @@ const Submissions = () => {
     };
 
     const handleSearchQuery = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         setSearchQuery(e.target.value);
         setActive(active.filter((element) => {
             return element.hackathonName.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
         }))
+
     }
     const handleNewest = async () => {
         const sortedNew = await active.sort((a, b) => {
             return new Date(b.startDate) - new Date(a.startDate);
         });
-        setActive(sortedNew);
-
-        console.log(active);
+        setActive(sortedNew.filter((element) => { return element.id !== undefined }));
+        // console.log(active);
     }
 
     const handleOldest = async () => {
@@ -52,9 +49,8 @@ const Submissions = () => {
                 new Date(a.startDate) - new Date(b.startDate)
             );
         });
-
-        await setActive(sortedOld);
-        console.log(active);
+        setActive(sortedOld.filter((element) => { return element.id !== undefined }));
+        // console.log(active);
     }
 
 
@@ -65,13 +61,11 @@ const Submissions = () => {
                 <Row>
                     <Col >
                         <div className='d-flex'>
-                            <p className='mx-2 allSubmissions' style={{ borderBottom: '6px solid green' }} onClick={() => {
-                                handleAllSubmissions()
-                            }}>
-                                <a href="#" >All Submissions</a>
+                            <p className='mx-2 allSubmissions' style={{ borderBottom: '6px solid green' }} >
+                                <a  onClick={() => { handleAllSubmissions() }} >All Submissions</a>
                             </p>
-                            <p className='mx-2 favouriteSubmissions' onClick={() => { handleFavouriteSubmissions() }} >
-                                <a href="#">Favourite Submissions</a>
+                            <p className='mx-2 favouriteSubmissions' >
+                                <a  onClick={() => { handleFavouriteSubmissions() }}>Favourite Submissions</a>
                             </p>
                         </div>
                     </Col>
@@ -89,7 +83,7 @@ const Submissions = () => {
                                 Sort By
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item  onClick={e => handleNewest()} >Newest</Dropdown.Item>
+                                <Dropdown.Item onClick={e => handleNewest()} >Newest</Dropdown.Item>
                                 <Dropdown.Item onClick={e => handleOldest()} >Oldest</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>

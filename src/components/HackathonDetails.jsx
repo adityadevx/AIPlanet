@@ -3,14 +3,13 @@ import { Container, Row, Col, Button, Modal, Form } from 'react-bootstrap'
 
 function HackathonDetails() {
 
-
   //set the hackathon id
   const currentUrl = window.location.href;
   const id = currentUrl.split('/').slice(-1).toString();
   const intId = parseInt(id);
 
   const [hackathonId, setHackathonId] = useState(intId)
-  
+
 
 
   // set the details of the hackathon
@@ -23,20 +22,9 @@ function HackathonDetails() {
   selectedHackathon = selectedHackathon.filter((item) => { return item.id == hackathonId })
 
   const [details, setDetails] = useState(selectedHackathon);
-  const[favourite, setFavourite ] = useState(details[0].favourite)
+  const [favourite, setFavourite] = useState(details[0].favourite)
 
 
-  // const handleFavourite = async () => {
-
-  //   const allDetails = await JSON.parse(localStorage.getItem('hackathonSubmissions'));
-  //   console.log(allDetails)
-
-  //   const updateDetails = allDetails.find((item) => { return item.id == hackathonId });
-  //   console.log(updateDetails)
-
-  //   console.log(updateDetails.favourite)
-
-  // }
 
   const handleFavourite = async () => {
     const allDetails = await JSON.parse(localStorage.getItem('hackathonSubmissions'));
@@ -46,7 +34,7 @@ function HackathonDetails() {
     allDetails[updateValueIndex].favourite = !allDetails[updateValueIndex].favourite;
     console.log(allDetails[updateValueIndex].favourite)
     setFavourite(allDetails[updateValueIndex].favourite);
-    await localStorage.setItem('hackathonSubmissions', JSON.stringify(allDetails));
+     localStorage.setItem('hackathonSubmissions', JSON.stringify(allDetails));
   }
 
   const dateInString = (value) => {
@@ -70,9 +58,6 @@ function HackathonDetails() {
     window.location.href = '/';
   }
 
-  // useEffect(() => {
-  //   handleFavourite();
-  // }, [handleFavourite])
 
   return (
     <>
@@ -99,7 +84,7 @@ function HackathonDetails() {
                     </Col>
                     <Col className='py-3'>{details[0].summary}</Col>
                     <Col className='d-flex align-items-center itemsMedia'>
-                      <span onClick={ handleFavourite} >
+                      <span onClick={handleFavourite} >
                         {
                           favourite ?
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-star-fill" viewBox="0 0 16 16">

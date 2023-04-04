@@ -6,6 +6,17 @@ function EditHackathon() {
     const currenturl = window.location.href;
     const id = currenturl.split('/')[4];
 
+    let items; 
+    localStorage.getItem('hackathonSubmissions') === null ? items = [] : items = JSON.parse(localStorage.getItem('hackathonSubmissions'));
+
+
+    const filter = items.filter((element) => {
+        return element.id === id
+    })
+
+    const [item , setItem] = useState(filter);
+    console.log(item);
+    
     const [hackathonId, setHackathonId] = useState(id);
     const [base64, setBase64] = useState("");
     const [formData, setFormData] = useState({
@@ -49,29 +60,6 @@ function EditHackathon() {
         window.location.href = `/submissiondetails/${hackathonId}`;
     }
 
-
-
-    useEffect(async () => {
-        async function fetchData() {
-            const hackathonSubmissions = await JSON.parse(localStorage.getItem('hackathonSubmissions'));
-            console.log(hackathonSubmissions);
-
-            const hackathon = await hackathonSubmissions.filter((element) => {
-                return element.id == hackathonId;
-            })
-            console.log(hackathonId)
-            console.log(hackathon)
-
-            const { title, summary, description, startDate, endDate, githubLink, otherLink, hackathonName, favourite } = hackathon[0];
-            setFormData({ title, summary, description, startDate, endDate, githubLink, otherLink, hackathonName, favourite });
-            setBase64(hackathon.imageName);
-        }
-        fetchData();
-
-        return () => {
-            console.log('cleanup');
-        }
-    }, [])
 
 
     return (

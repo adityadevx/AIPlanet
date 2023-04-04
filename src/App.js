@@ -1,13 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import HeroSection from './components/HeroSection';
 import Nav from './components/Nav';
-import SubmissionCards from './components/SubmissionCards';
 import Submissions from './components/Submissions';
 import UploadSubmission from './components/UploadSubmission';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HackathonDetails from './components/HackathonDetails';
 import EditHackathon from './components/EditHackathon';
-import HackathonCard from './components/HackathonCard';
 
 
 function App() {
