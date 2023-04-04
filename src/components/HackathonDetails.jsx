@@ -8,18 +8,17 @@ function HackathonDetails() {
   const id = currentUrl.split('/').slice(-1).toString();
   const intId = parseInt(id);
 
-  const [hackathonId, setHackathonId] = useState(intId)
-
-
-
+  
   // set the details of the hackathon
   let selectedHackathon;
   if (localStorage.getItem('hackathonSubmissions') === null)
     selectedHackathon = [];
   else
     selectedHackathon = JSON.parse(localStorage.getItem('hackathonSubmissions'));
+    
 
-  selectedHackathon = selectedHackathon.filter((item) => { return item.id == hackathonId })
+    // filter the hackathon with the id
+  selectedHackathon = selectedHackathon.filter((item) => { return item.id == intId })
 
   const [details, setDetails] = useState(selectedHackathon);
   const [favourite, setFavourite] = useState(details[0].favourite)
@@ -28,7 +27,7 @@ function HackathonDetails() {
 
   const handleFavourite = async () => {
     const allDetails = await JSON.parse(localStorage.getItem('hackathonSubmissions'));
-    const updateValueIndex = allDetails.findIndex((item) => { return item.id == hackathonId });
+    const updateValueIndex = allDetails.findIndex((item) => { return item.id == intId });
     console.log(updateValueIndex)
 
     allDetails[updateValueIndex].favourite = !allDetails[updateValueIndex].favourite;
@@ -49,7 +48,7 @@ function HackathonDetails() {
   const handleDelete = async () => {
     const hackhathonList = await JSON.parse(localStorage.getItem('hackathonSubmissions'));
     const filteredList = hackhathonList.filter((item) => {
-      return item.id != hackathonId;
+      return item.id != intId;
     })
     await localStorage.setItem('hackathonSubmissions', JSON.stringify(filteredList));
     const updated = await localStorage.getItem('hackathonSubmissions');
@@ -57,7 +56,6 @@ function HackathonDetails() {
     setDetails(newupdated)
     window.location.href = '/';
   }
-
 
   return (
     <>
@@ -112,7 +110,7 @@ function HackathonDetails() {
                   </Col>
                   <Col sm={3} className='align-items-center d-flex justify-content-center my-2' >
                     <div className="d-grid gap-2 col-6 ">
-                      <a className="btn  btn-outline-light linkButtons" href={`/editsubmission/${hackathonId}`}
+                      <a className="btn  btn-outline-light linkButtons" href={`/editsubmission/${intId}`}
                         role="button">
                         <span className='px-1' >
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -153,7 +151,7 @@ function HackathonDetails() {
                       <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z" />
                       <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z" />
                     </svg>
-                    <span className='px-2'>26-Feb-2022 - 28-Feb-2022</span>
+                    <span className='px-2'>{} - {'todo date fix'}</span>
                   </Col>
                   <br />
                   <Col>

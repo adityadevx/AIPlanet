@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { Row, Col, Form, Button, Container } from 'react-bootstrap'
 
 function EditHackathon() {
@@ -6,31 +6,42 @@ function EditHackathon() {
     const currenturl = window.location.href;
     const id = currenturl.split('/')[4];
 
-    let items; 
-    localStorage.getItem('hackathonSubmissions') === null ? items = [] : items = JSON.parse(localStorage.getItem('hackathonSubmissions'));
+    let editableItem = [];
+    localStorage.getItem('hackathonSubmissions') === null ? editableItem = [] : editableItem = JSON.parse(localStorage.getItem('hackathonSubmissions'));
 
 
-    const filter = items.filter((element) => {
-        return element.id === id
-    })
-
-    const [item , setItem] = useState(filter);
-    console.log(item);
-    
     const [hackathonId, setHackathonId] = useState(id);
+    const [imgDisplay, setImgDisplay] = useState("");
+    const fileInputField = useRef(null);
+    console.log(hackathonId);
+
+    const editItemIndex =  editableItem.findIndex((item) => { return item.id == id })
+
+    const availableInputs = editableItem[editItemIndex];
+
+
+
     const [base64, setBase64] = useState("");
     const [formData, setFormData] = useState({
-        title: '', summary: '', description: '', startDate: '', hackathonName: '', endDate: '', githubLink: '', otherLink: '', favourite: false
+        title: availableInputs.title,
+        summary: availableInputs.summary,
+        description: availableInputs.description,
+        startDate: availableInputs.startDate,
+        hackathonName: availableInputs.hackathonName,
+        endDate: availableInputs.endDate,
+        githubLink: availableInputs.github,
+        otherLink: availableInputs.otherLink,
     })
 
     // Destructuring formData
-    const { title, summary, description, startDate, endDate, githubLink, otherLink, hackathonName, favourite } = formData;
+    const { title, summary, description, startDate, endDate, githubLink, otherLink, hackathonName } = formData;
 
     const handleOnChange = (e) => {
         setFormData({
             ...formData, [e.target.name]: e.target.value
         })
-        // console.log(formData)
+        console.log(e.target.name, e.target.value)
+
     }
     const handleOnChangeImage = (e) => {
         const selectedFile = e.target.files[0];
@@ -47,16 +58,37 @@ function EditHackathon() {
                     alert('Image resolution is too low. Minimum resolution : 360px X 360px')
                     return;
                 }
+                const imageName = selectedFile['name'];
+                setImgDisplay(imageName);
             }
             setBase64(reader.result);
         }
         reader.readAsDataURL(selectedFile);
-        console.log(reader.result);
     }
 
-    const handleOnEdit = (e) => {
+    const handleOnEdit = async (e) => {
         e.prevenDefault();
-        console.log('one edit');
+
+        const allSubmissions = await JSON.parse(localStorage.getItem('hackathonSubmissions'));
+        const editItemIndex =  editableItem.findIndex((item) => { return item.id == id });
+
+        const editedData = {
+            id: hackathonId,
+            title: title,
+            summary: summary,
+            description: description,
+            startDate: startDate,
+            endDate: endDate,
+            github: githubLink,
+            otherLink: otherLink,
+            hackathonName: hackathonName,
+            imageName: base64
+        }
+        console.log(editedData)
+
+        allSubmissions[editItemIndex] = await editedData;
+
+        await localStorage.setItem('hackathonSubmissions', JSON.stringify(allSubmissions));
         window.location.href = `/submissiondetails/${hackathonId}`;
     }
 
@@ -107,10 +139,21 @@ function EditHackathon() {
                             <Form.Label className='font-bold'>Cover Image</Form.Label>
                             <br />
                             <Form.Label className='text-muted'>Minimum resolution : 360px X 360px</Form.Label>
-                            <Form.Control type="file" placeholder="A short summary of your submission(this will be visible to your submission)" onChange={(e) => { handleOnChangeImage(e) }} required />
+                            <div>
+                                <Form.Control type="file" onChange={(e) => { handleOnChangeImage(e) }} ref={fileInputField} required />
+                                <div className='inputFile'>
+                                    <Form.Label className='custom-file-upload' onClick={() => fileInputField.current.click()}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-image" viewBox="0 0 16 16">
+                                            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                            <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+                                        </svg>
+                                    </Form.Label>
+                                </div>
+                                <Form.Label className='text-muted'>{imgDisplay}</Form.Label>
+                            </div>
                         </Form.Group>
                     </Row>
-
+                    {console.log(formData.title)}
                     {/* Date */}
                     <Row sm={6} className="mb-3">
                         <Col sm={3}>

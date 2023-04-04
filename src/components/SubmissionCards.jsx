@@ -36,13 +36,9 @@ const SubmissionCards = ({ submission }) => {
                                             </Card.Body>
                                         </Card>
                                     </Col>
-                             
                             </>
                         )
                     })
-
-
-
                 }
             </Row>
         </Container>

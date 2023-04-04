@@ -116,3 +116,9 @@ input[type="file"] {
   border-radius: 24px;
   background-color: rgba(245, 245, 245, 1);
 }
+
+#dropdown-basic,
+.searchBar {
+  border-radius: 2rem;
+  border-color: black;
+}

@@ -28,13 +28,14 @@ const Submissions = () => {
     };
 
     const handleSearchQuery = (e) => {
-        // console.log(e.target.value);
+        console.log(e.target.value)
         setSearchQuery(e.target.value);
-        setActive(active.filter((element) => {
-            return element.hackathonName.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
-        }))
 
-    }
+        setActive(active.filter((element) => {
+            return element.hackathonName.toLowerCase().includes(e.target.value.toLowerCase()) === true;
+        }))
+    };
+
     const handleNewest = async () => {
         const sortedNew = await active.sort((a, b) => {
             return new Date(b.startDate) - new Date(a.startDate);
@@ -62,38 +63,37 @@ const Submissions = () => {
                     <Col >
                         <div className='d-flex'>
                             <p className='mx-2 allSubmissions' style={{ borderBottom: '6px solid green' }} >
-                                <a  onClick={() => { handleAllSubmissions() }} >All Submissions</a>
+                                <a onClick={() => { handleAllSubmissions() }} >All Submissions</a>
                             </p>
                             <p className='mx-2 favouriteSubmissions' >
-                                <a  onClick={() => { handleFavouriteSubmissions() }}>Favourite Submissions</a>
+                                <a onClick={() => { handleFavouriteSubmissions() }}>Favourite Submissions</a>
                             </p>
                         </div>
                     </Col>
                     <Col className='d-flex align-items-center justify-content-end '>
                         <div className="form px-2">
                             <i className="fa fa-search"></i>
-                            <input type="text" className="form-control form-input text-center " placeholder="Search..."
+                            <input type="text" className="form-control form-input text-center searchBar" placeholder="Search..."
                                 value={searchQuery}
-                                onChange={(e) => { handleSearchQuery(e) }}
-                                style={{ borderRadius: '2rem', borderColor: 'black' }}
+                                onChange={(e) => { handleSearchQuery(e)}}
+                                onBlur={(e) => { setActive(items)}}
                             />
                         </div>
                         <Dropdown >
-                            <Dropdown.Toggle variant="light" id="dropdown-basic" style={{ borderRadius: '2rem', borderColor: 'black' }}>
+                            <Dropdown.Toggle variant="light" id="dropdown-basic">
                                 Sort By
                             </Dropdown.Toggle>
-                            <Dropdown.Menu>
+                            <Dropdown.Menu >
                                 <Dropdown.Item onClick={e => handleNewest()} >Newest</Dropdown.Item>
-                                <Dropdown.Item onClick={e => handleOldest()} >Oldest</Dropdown.Item>
+                                <Dropdown.Item onClick={e => handleOldest()}>Oldest</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
                 </Row>
             </Container>
+
             {/* Displaying Cards */}
             <HackathonCard cardData={active} />
-
-
         </>
     )
 }

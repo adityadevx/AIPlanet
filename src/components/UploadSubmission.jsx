@@ -51,7 +51,6 @@ function UploadSubmission({ editableId }) {
         }
         
         const imageName = selectedFile['name'];
-        
         setImgDisplay(imageName);
 
       }

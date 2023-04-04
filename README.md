@@ -1,27 +1,15 @@
 # You can check the progress of the project here: [AIPlanet](https://ai-planet-three.vercel.app/)
 
-## Progress![](https://geps.dev/progress/75)
+## Progress![](https://geps.dev/progress/95)
 
-
-
-### Upload Submission Fixes
-
-
-### Submission Page Fixes (mostly done)
-
-
-
-#### Bug Fixes
-
-list of bugs to fix
-
-- hackathon delete done cosnole error #4
+## Project Description
+ this is a project that will help you to learn about localstorage and how to use it in your projects
 
 #### New Features
 
 list of new features to add
-
 - edit feature #1
-- oldest first feature #3
-- newest first feature #4
-- upload img placeholder #6
+- todo date fix  hackathon details #2
+ - last updated days ago fix
+ - button fixes
+
