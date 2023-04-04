@@ -83,7 +83,7 @@ function HackathonDetails() {
                     <Col className='d-flex align-items-center '>
                       <div>
                         <img src={details[0].imageName} alt="hackathon Poster" height={150} width={150}
-                          style={{ borderRadius: '14px' }} />
+                          style={{ borderRadius: '14px', aspectRatio : '1/1 !important' }}  />
                       </div>
                       <div>
                         <h1 className='px-3'>{details[0].title}</h1>

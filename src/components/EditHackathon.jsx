@@ -88,8 +88,7 @@ function EditHackathon() {
                 favourite: availableInputs.favourite,
                 imageName: availableInputs.imageName,
             })
-            setImgDisplay('')
-            formData.imageName ? setImgDisplay('Click on the box to update the image') : setImgDisplay('')
+            
         }
         setData();
 
@@ -170,7 +169,7 @@ function EditHackathon() {
                                         </svg>
                                     </Form.Label>
                                 </div>
-                                <Form.Label className='text-muted'>{imgDisplay}</Form.Label>
+                                <Form.Label className='text-muted'>Click On the above box to change the image</Form.Label>
                             </div>
                         </Form.Group>
                     </Row>
