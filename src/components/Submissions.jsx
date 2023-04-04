@@ -28,7 +28,7 @@ const Submissions = () => {
     };
 
     const handleSearchQuery = (e) => {
-        console.log(e.target.value)
+        // console.log(e.target.value)
         setSearchQuery(e.target.value);
 
         setActive(active.filter((element) => {

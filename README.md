@@ -3,13 +3,12 @@
 ## Progress![](https://geps.dev/progress/95)
 
 ## Project Description
- this is a project that will help you to learn about localstorage and how to use it in your projects
+
+this is a project that will help you to learn about localstorage and how to use it in your projects
 
 #### New Features
 
 list of new features to add
-- edit feature #1
-- todo date fix  hackathon details #2
- - last updated days ago fix
- - button fixes
 
+- todo date fix hackathon details #2
+- button fixes
