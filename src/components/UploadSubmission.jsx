@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-import { Row, Col, Form, Button, Container } from 'react-bootstrap'
+import { Row, Col, Form, Button, Container} from 'react-bootstrap'
 
-function UploadSubmission({editableId }) {
-  
+
+function UploadSubmission({ editableId }) {
+
   let hackathonSubmissions;
   if (localStorage.getItem('hackathonSubmissions') === null) {
     hackathonSubmissions = [];
@@ -12,10 +13,10 @@ function UploadSubmission({editableId }) {
     hackathonSubmissions = JSON.parse(localStorage.getItem('hackathonSubmissions'));
   }
   const [submission, setSubmission] = useState(hackathonSubmissions);
-  
-  
-  
-  
+
+
+
+
   // formData is an object
   const [base64, setBase64] = useState("");
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ function UploadSubmission({editableId }) {
   })
 
   // Destructuring formData
-  const { title, summary, description, startDate, endDate, githubLink, otherLink, hackathonName,favourite } = formData;
+  const { title, summary, description, startDate, endDate, githubLink, otherLink, hackathonName, favourite } = formData;
 
 
   const handleOnChange = (e) => {
@@ -58,7 +59,7 @@ function UploadSubmission({editableId }) {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    
+
     let id;
     if (hackathonSubmissions.length === 0) {
       id = 0;
@@ -78,13 +79,13 @@ function UploadSubmission({editableId }) {
       github: githubLink,
       otherLink: otherLink,
       favourite: favourite,
-      hackathonName : hackathonName,
+      hackathonName: hackathonName,
     }
-    
+
     setSubmission([...submission, mySubmission]);
     localStorage.setItem('hackathonSubmissions', JSON.stringify([...submission, mySubmission]));
     window.location.href = `/submissiondetails/${id}`;
-    
+
     setFormData({ title: '', summary: '', description: '', startDate: '', endDate: '', githubLink: '', otherLink: '', hackathonName: '' });
     setBase64('');
     // addHackathonSubmission();
@@ -134,53 +135,56 @@ function UploadSubmission({editableId }) {
             <Form.Label className='font-bold'>Cover Image</Form.Label>
             <br />
             <Form.Label className='text-muted'>Minimum resolution : 360px X 360px</Form.Label>
-            <Form.Control type="file" placeholder="A short summary of your submission(this will be visible to your submission)" onChange={(e) => { handleOnChangeImage(e) }} required />
+            <div>
+              <Form.Control type="file" placeholder="A short summary of your submission(this will be visible to your submission)" onChange={(e) => { handleOnChangeImage(e) }} required />
+              
+            </div>
           </Form.Group>
         </Row>
+        
+      {/* Date */}
+      <Row sm={6} className="mb-3">
+        <Col sm={3}>
+          <Form.Label>
+            <span>Hackathon Start Date</span>
+          </Form.Label>
+          <Form.Control type='text' name='startDate' value={startDate} onChange={(e) => { handleOnChange(e) }} placeholder='Select Start Date'
+            onFocus={(e) => { e.target.type = 'date' }}
+            onBlur={(e) => { e.target.type = 'text' }}
+          />
+        </Col>
+        <Col sm={3}>
+          <Form.Label>Hackathon End Date</Form.Label>
+          <Form.Control type='text' name="endDate" value={endDate} onChange={(e) => { handleOnChange(e) }} placeholder="Select End Date"
+            onFocus={(e) => { e.target.type = 'date' }}
+            onBlur={(e) => { e.target.type = 'text' }}
+          />
+        </Col>
+      </Row>
 
-        {/* Date */}
-        <Row sm={6} className="mb-3">
-          <Col sm={3}>
-            <Form.Label>
-              <span>Hackathon Start Date</span>
-            </Form.Label>
-            <Form.Control type='text' name='startDate' value={startDate} onChange={(e) => { handleOnChange(e) }} placeholder='Select Start Date'
-              onFocus={(e) => { e.target.type = 'date' }}
-              onBlur={(e) => { e.target.type = 'text' }}
-            />
-          </Col>
-          <Col sm={3}>
-            <Form.Label>Hackathon End Date</Form.Label>
-            <Form.Control type='text' name="endDate" value={endDate} onChange={(e) => { handleOnChange(e) }} placeholder="Select End Date"
-              onFocus={(e) => { e.target.type = 'date' }}
-              onBlur={(e) => { e.target.type = 'text' }}
-            />
-          </Col>
-        </Row>
+      {/* Github Repository */}
+      <Row className="mb-3">
+        <Form.Group as={Col} sm={6} controlId="formGridText">
+          <Form.Label className='font-bold'>Github Repository</Form.Label>
+          <Form.Control type="text" name='githubLink' placeholder="Enter your Submission's public Github repository link." value={githubLink} onChange={(e) => { handleOnChange(e) }} required />
+        </Form.Group>
+      </Row>
 
-        {/* Github Repository */}
-        <Row className="mb-3">
-          <Form.Group as={Col} sm={6} controlId="formGridText">
-            <Form.Label className='font-bold'>Github Repository</Form.Label>
-            <Form.Control type="text" name='githubLink' placeholder="Enter your Submission's public Github repository link." value={githubLink} onChange={(e) => { handleOnChange(e) }} required />
-          </Form.Group>
-        </Row>
+      {/* Other Links */}
+      <Row className="mb-5">
+        <Form.Group as={Col} sm={6} controlId="formGridText">
+          <Form.Label className='font-bold'>Other Links</Form.Label>
+          <Form.Control type="text" name='otherLink' placeholder="You can upload a video demo or URL of your demo app here." value={otherLink} onChange={(e) => { handleOnChange(e) }} />
+        </Form.Group>
+      </Row>
 
-        {/* Other Links */}
-        <Row className="mb-5">
-          <Form.Group as={Col} sm={6} controlId="formGridText">
-            <Form.Label className='font-bold'>Other Links</Form.Label>
-            <Form.Control type="text" name='otherLink' placeholder="You can upload a video demo or URL of your demo app here." value={otherLink} onChange={(e) => { handleOnChange(e) }} />
-          </Form.Group>
-        </Row>
+      <hr />
 
-        <hr />
-
-        <Button variant="primary" type="submit" className='uploadSubmissionBtn'>
-          Upload Submission
-        </Button>
-      </Form>
-    </Container>
+      <Button variant="primary" type="submit" className='uploadSubmissionBtn'>
+        Upload Submission
+      </Button>
+    </Form>
+    </Container >
   );
 }
 

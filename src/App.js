@@ -7,9 +7,12 @@ import UploadSubmission from './components/UploadSubmission';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HackathonDetails from './components/HackathonDetails';
 import EditHackathon from './components/EditHackathon';
+import HackathonCard from './components/HackathonCard';
 
 
 function App() {
+
+
   return (
     <>
       <Router>
@@ -43,6 +46,7 @@ function App() {
               <EditHackathon />
             </>
           } />
+          
         </Routes>
       </Router>
     </>

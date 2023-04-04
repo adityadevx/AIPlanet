@@ -7,7 +7,10 @@ function HackathonDetails() {
   //set the hackathon id
   const currentUrl = window.location.href;
   const id = currentUrl.split('/').slice(-1).toString();
-  const [hackathonId, setHackathonId] = useState(id)
+  const intId = parseInt(id);
+
+  const [hackathonId, setHackathonId] = useState(intId)
+  
 
 
   // set the details of the hackathon
@@ -17,27 +20,33 @@ function HackathonDetails() {
   else
     selectedHackathon = JSON.parse(localStorage.getItem('hackathonSubmissions'));
 
-  const [details, setDetails] = useState(selectedHackathon);
+  selectedHackathon = selectedHackathon.filter((item) => { return item.id == hackathonId })
 
+  const [details, setDetails] = useState(selectedHackathon);
+  const[favourite, setFavourite ] = useState(details[0].favourite)
+
+
+  // const handleFavourite = async () => {
+
+  //   const allDetails = await JSON.parse(localStorage.getItem('hackathonSubmissions'));
+  //   console.log(allDetails)
+
+  //   const updateDetails = allDetails.find((item) => { return item.id == hackathonId });
+  //   console.log(updateDetails)
+
+  //   console.log(updateDetails.favourite)
+
+  // }
 
   const handleFavourite = async () => {
-    const obj = localStorage.getItem('hackathonSubmissions');
-    const parsedObj = JSON.parse(obj);
-    // console.log(parsedObj[hackathonId]);
+    const allDetails = await JSON.parse(localStorage.getItem('hackathonSubmissions'));
+    const updateValueIndex = allDetails.findIndex((item) => { return item.id == hackathonId });
+    console.log(updateValueIndex)
 
-    // console.log(parsedObj[hackathonId]);
-    const updateFavourite = parsedObj[hackathonId].favourite === true ? false : true;
-    parsedObj[hackathonId].favourite = updateFavourite;
-    localStorage.setItem('hackathonSubmissions', JSON.stringify(parsedObj));
-
-
-    let newDetails = JSON.parse(localStorage.getItem('hackathonSubmissions'));
-    newDetails = newDetails.filter((item) => {
-      return item.id == hackathonId;
-    })
-    setDetails(newDetails);
-
-
+    allDetails[updateValueIndex].favourite = !allDetails[updateValueIndex].favourite;
+    console.log(allDetails[updateValueIndex].favourite)
+    setFavourite(allDetails[updateValueIndex].favourite);
+    await localStorage.setItem('hackathonSubmissions', JSON.stringify(allDetails));
   }
 
   const dateInString = (value) => {
@@ -62,8 +71,8 @@ function HackathonDetails() {
   }
 
   // useEffect(() => {
-  //   setDetails(details);
-  // }, [handleFavourite()])
+  //   handleFavourite();
+  // }, [handleFavourite])
 
   return (
     <>
@@ -90,9 +99,9 @@ function HackathonDetails() {
                     </Col>
                     <Col className='py-3'>{details[0].summary}</Col>
                     <Col className='d-flex align-items-center itemsMedia'>
-                      <span onClick={() => { handleFavourite() }} >
+                      <span onClick={ handleFavourite} >
                         {
-                          details[0].favourite ?
+                          favourite ?
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-star-fill" viewBox="0 0 16 16">
                               <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                             </svg>

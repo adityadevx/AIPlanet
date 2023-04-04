@@ -16,7 +16,7 @@ function HackathonCard({cardData}) {
      <Container>
                 <Row >
                     {
-                        Array.from(cardData).map((element, index) => {
+                        Array.from(cardData).map((element) => {
                             return (
                                 <div className="col-md-4 mb-3 mb-sm-0 " key={element.id}>
                                     <div className="card cardShadow"

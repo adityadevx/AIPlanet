@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/esm/Container'
-import { Row, Col, Dropdown, DropdownButton, Card } from 'react-bootstrap'
+import { Row, Col, Dropdown } from 'react-bootstrap'
 import HackathonCard from './HackathonCard';
 
 const Submissions = () => {
@@ -9,6 +9,8 @@ const Submissions = () => {
 
     const [active, setActive] = useState(items);
     const [searchQuery, setSearchQuery] = useState('');
+
+
 
     const handleAllSubmissions = () => {
         console.log('all submissions');
@@ -35,20 +37,27 @@ const Submissions = () => {
             return element.hackathonName.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
         }))
     }
+    const handleNewest = async () => {
+        const sortedNew = await active.sort((a, b) => {
+            return new Date(b.startDate) - new Date(a.startDate);
+        });
+        setActive(sortedNew);
 
-    const handleNewset = async () => {
-        const sortedNew = await active.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
-        // console.log(sortedNews)
-        await setActive(sortedNew);
+        console.log(active);
     }
 
     const handleOldest = async () => {
-        const sortedNews = await active.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-        console.log(sortedNews);
-        await setActive(sortedNews);
+        const sortedOld = await active.sort((a, b) => {
+            return (
+                new Date(a.startDate) - new Date(b.startDate)
+            );
+        });
+
+        await setActive(sortedOld);
+        console.log(active);
     }
 
-   
+
 
     return (
         <>
@@ -80,8 +89,8 @@ const Submissions = () => {
                                 Sort By
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item  onClick={(e) => { handleNewset() }}>Newest</Dropdown.Item>
-                                <Dropdown.Item onClick={(e) => { handleOldest() }} >Oldest</Dropdown.Item>
+                                <Dropdown.Item  onClick={e => handleNewest()} >Newest</Dropdown.Item>
+                                <Dropdown.Item onClick={e => handleOldest()} >Oldest</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
@@ -89,7 +98,6 @@ const Submissions = () => {
             </Container>
             {/* Displaying Cards */}
             <HackathonCard cardData={active} />
-           
 
 
         </>
