@@ -49,7 +49,7 @@ function UploadSubmission({ editableId }) {
           alert('Image resolution is too low. Minimum resolution : 360px X 360px')
           return;
         }
-        
+
         const imageName = selectedFile['name'];
         setImgDisplay(imageName);
 
@@ -58,7 +58,7 @@ function UploadSubmission({ editableId }) {
     }
     reader.readAsDataURL(selectedFile);
     // console.log(reader.result);
-    
+
   }
 
   const handleOnSubmit = (e) => {

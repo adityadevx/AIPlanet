@@ -1,12 +1,13 @@
 import mainLogo from '../assets/mainLogo.png'
-import{Container,Navbar} from 'react-bootstrap'
+import { Container, Navbar } from 'react-bootstrap'
 
 function Nav() {
+
   return (
     <>
       <Navbar bg="light">
         <Container>
-          <Navbar.Brand href="/">
+          <Navbar.Brand href={'/'}>
             <img
               src={mainLogo}
               width="auto"
@@ -16,7 +17,7 @@ function Nav() {
             />
           </Navbar.Brand>
         </Container>
-      </Navbar>
+      </Navbar >
     </>
   );
 }

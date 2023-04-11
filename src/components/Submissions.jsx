@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import { allHackathonContext } from '../context/allHackathon';
+import React, { useState, useContext } from 'react'
 import Container from 'react-bootstrap/esm/Container'
 import { Row, Col, Dropdown } from 'react-bootstrap'
 import HackathonCard from './HackathonCard';
 
 const Submissions = () => {
-    let items;
-    localStorage.getItem('hackathonSubmissions') === null ? items = [] : items = JSON.parse(localStorage.getItem('hackathonSubmissions'));
+    const hackathons = useContext(allHackathonContext);
+    const { items } = hackathons;
+    // console.log(items)
+
 
     const [active, setActive] = useState(items);
     const [searchQuery, setSearchQuery] = useState('');
@@ -75,8 +78,8 @@ const Submissions = () => {
                             <i className="fa fa-search"></i>
                             <input type="text" className="form-control form-input text-center searchBar" placeholder="Search..."
                                 value={searchQuery}
-                                onChange={(e) => { handleSearchQuery(e)}}
-                                onBlur={(e) => { setActive(items)}}
+                                onChange={(e) => { handleSearchQuery(e) }}
+                                onBlur={(e) => { setActive(items) }}
                             />
                         </div>
                         <Dropdown >

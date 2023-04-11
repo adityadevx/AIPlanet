@@ -6,6 +6,9 @@ import UploadSubmission from './components/UploadSubmission';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HackathonDetails from './components/HackathonDetails';
 import EditHackathon from './components/EditHackathon';
+import NewComp from './components/NewComp';
+import { AllHackathonProvider } from './context/allHackathon';
+
 
 
 function App() {
@@ -20,7 +23,11 @@ function App() {
               <>
                 <Nav />
                 <HeroSection />
-                <Submissions />
+
+                <AllHackathonProvider>
+                  <Submissions />
+                  {/* <NewComp /> */}
+                </AllHackathonProvider>
               </>
             } />
 
@@ -34,7 +41,9 @@ function App() {
           <Route path='/submissiondetails/:id' element={
             <>
               <Nav />
-              <HackathonDetails />
+              <AllHackathonProvider>
+                <HackathonDetails />
+              </AllHackathonProvider>
             </>
           } />
 
@@ -44,7 +53,7 @@ function App() {
               <EditHackathon />
             </>
           } />
-          
+
         </Routes>
       </Router>
     </>
