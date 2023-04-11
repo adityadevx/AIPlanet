@@ -11,7 +11,7 @@ function HackathonCard({ cardData }) {
         const today = new Date();
         const daysPassed = Math.floor((today - uploadDate) / (1000 * 60 * 60 * 24));
         // console.log(uploadDate, today, daysPassed)
-        if (daysPassed === 0) return (`last updated 0 days ago`)
+        if (daysPassed === 0) return (`updated 0 days ago`)
         return (`updated ${daysPassed} days ago`)
     }
 

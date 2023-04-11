@@ -156,18 +156,19 @@ function HackathonDetails() {
             </Container>
 
 
-            <Modal show={show} onHide={handleModalClose}>
-              <Modal.Header closeButton>
-              </Modal.Header>
-              <Modal.Body>Do you want to delete this submission?</Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleModalClose}>
-                  No
-                </Button>
-                <Button variant="primary" onClick={handleDelete}>
-                  Yes
-                </Button>
-              </Modal.Footer>
+            <Modal show={show} onHide={handleModalClose} className='d-flex justify-content-center align-items-center'>
+              <Modal.Body>
+                <h5 className='fw-bold'>Delete Model</h5>
+                <p className='text-muted'>This action is irreversible. Are you sure you want to delete this model?</p>
+                <div className='d-flex align-items-end justify-content-end'>
+                  <Button variant="light" className='mx-1 btn-outline-dark' onClick={handleModalClose}>
+                    Cancel
+                  </Button>
+                  <Button variant="danger" className='mx-1 ' onClick={handleDelete}>
+                    Delete
+                  </Button>
+                </div>
+              </Modal.Body>
             </Modal>
           </>
       }

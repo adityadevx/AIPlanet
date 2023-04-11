@@ -65,10 +65,10 @@ const Submissions = () => {
                 <Row>
                     <Col >
                         <div className='d-flex'>
-                            <p className='mx-2 allSubmissions' style={{ borderBottom: '6px solid green' }} >
+                            <p className='mx-2 allSubmissions' style={{ borderBottom: '6px solid green', cursor: 'pointer' }} >
                                 <a onClick={() => { handleAllSubmissions() }} >All Submissions</a>
                             </p>
-                            <p className='mx-2 favouriteSubmissions' >
+                            <p className='mx-2 favouriteSubmissions' style={{ cursor: 'pointer' }} >
                                 <a onClick={() => { handleFavouriteSubmissions() }}>Favourite Submissions</a>
                             </p>
                         </div>
